@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int minSumOfLengths(vector<int>& arr, int target) {
+        int i, j = 0, k, l;
+        int len = arr.size();
+        unordered_map<int, int> indexMap;
+        vector<int> dp(len, -1);
+        int ans = INT_MAX;
+        indexMap[0] = -1;
+        for(i = 0; i < len; i++){
+            j += arr[i];
+            indexMap[j] = i;
+            if(indexMap.find(j - target) != indexMap.end()){
+                k = indexMap[j - target];
+                l = i - k;
+                if(k >= 0 && dp[k] != - 1){
+                    ans = min(ans, l + dp[k]);
+                }
+                if(i == 0 || dp[i - 1] == -1){
+                    dp[i] = l;
+                }
+                else{
+                    dp[i] = min(dp[i - 1], l);
+                }
+            }
+            else{
+                dp[i] = i == 0 ? -1 : dp[i - 1];
+            }
+        }
+        return ans == INT_MAX ? -1 : ans;
+    }
+};
