@@ -1,0 +1,32 @@
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode* dummy_head = new ListNode();
+        auto ptr = dummy_head;
+        int carry = 0;
+        int sum = 0;
+        while(l1 && l2){
+            addNode(l1->val + l2->val+carry, carry, ptr);
+            l1 = l1->next;
+            l2 = l2->next;
+            ptr = ptr->next;
+
+        }
+        auto ptr2 = l1? l1 : l2;
+        while(ptr2){
+            addNode( ptr2->val+carry, carry, ptr);
+            ptr2 = ptr2->next;
+            ptr = ptr->next;
+        }
+        if(carry){
+            addNode(carry, carry, ptr);
+        }
+        return dummy_head->next;
+    }
+    
+    void addNode(int sum, int& carry, ListNode* ptr){
+            carry = sum/10;
+            ListNode* node = new ListNode(sum%10);
+            ptr->next = node;
+    }
+};
