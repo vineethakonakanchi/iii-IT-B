@@ -1,0 +1,20 @@
+class Solution {
+public:
+    string longestCommonPrefix(vector<string>& strs) {        
+        if (strs[0].length()==0)return ""; // If the first string is empty
+        string ans="";
+        char x;  
+        for (int j=0;j<201;j++){
+            if (strs[0][j]) x = strs[0][j]; // If char exists at jth index of 1st string, then set it as x to compare
+            else return ans; // If the 1st string does not have a char at this index, ie, j>length of 1st string-1
+            for (int i=0;i<strs.size();i++){
+                if (strs[i][j] !=x){ 
+                    return ans;
+                }
+            }
+            ans += x;
+        }
+        return ans;
+        
+    }
+};
